@@ -1,5 +1,5 @@
-<h1 align="center">Roblox FastFlags Optimization Guide for Sober</h1>
-<p align="center">Verified, safe, and allowlisted FFlag configurations for the Sober client on Linux.</p>
+<h1 align="center">Roblox FastFlags Guide for Sober</h1>
+<p align="center">Verified, safe, and allowlisted FastFlags for the Sober client on Linux.</p>
 
 ---
 
