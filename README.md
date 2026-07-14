@@ -1,6 +1,16 @@
 <h1 align="center">Roblox FastFlags Guide for Sober</h1>
 <p align="center">Verified, safe, and allowlisted FastFlags for the Sober client on Linux.</p>
 
+<p align="center">
+  <b>Translations:</b>
+  <a href="README.md">English</a> |
+  <a href="README.es.md">Español</a> |
+  <a href="README.zh.md">简体中文</a> |
+  <a href="README.ru.md">Русский</a> |
+  <a href="README.id.md">Bahasa Indonesia</a> |
+  <a href="README.pt.md">Português</a>
+</p>
+
 ---
 
 ## Table of Contents
