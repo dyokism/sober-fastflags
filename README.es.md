@@ -40,7 +40,7 @@
 
 ## ¿Qué es Sober?
 
-[Sober](https://sober.vinegarhq.org/) es una capa de compatibilidad que ejecuta la aplicación Android de Roblox (APK) de forma nativa en escritorios Linux. Se distribuye como Flatpak (`org.vinegarhq.Sober`) y utiliza Vulkan como backend de renderizado principal, con OpenGL como alternativa (fallback). La configuración se administra a través de `~/.var/app/org.vinegarhq.Sober/config/sober/config.json`.
+[Sober](https://sober.vinegarhq.org/) es una capa de compatibilidad que ejecuta la aplicación de Roblox para Android (APK) de forma nativa en escritorios Linux. Se distribuye como un Flatpak (`org.vinegarhq.Sober`) y utiliza Vulkan como su motor de renderizado principal, con OpenGL como alternativa (fallback). La configuración se gestiona a través de `~/.var/app/org.vinegarhq.Sober/config/sober/config.json`. También puede abrir el menú de configuración de forma gráfica usando el comando `flatpak run org.vinegarhq.Sober config` o haciendo clic derecho en Sober en su menú de aplicaciones y seleccionando **Settings**.
 
 ## ¿Qué son las FastFlags?
 
@@ -59,16 +59,14 @@ Estas flags controlan el detalle de la geometría, el suavizado de líneas (anti
 
 | Nombre de la Flag | Tipo | Rango de valores | Qué hace |
 | :--- | :--- | :--- | :--- |
-| `DFIntCSGLevelOfDetailSwitchingDistance` | int | `0` - `1000` | Distancia principal de culling LOD para modelos CSG. Menor valor = mejores FPS. |
+| `DFIntCSGLevelOfDetailSwitchingDistance` | int | `0` - `1000` | Distancia principal de culling LOD para modelos CSG. Menor = mejor FPS. |
 | `DFIntCSGLevelOfDetailSwitchingDistanceL12` | int | `0` - `1000` | Distancia LOD para calidad gráfica 1–2. |
 | `DFIntCSGLevelOfDetailSwitchingDistanceL23` | int | `0` - `1000` | Distancia LOD para calidad gráfica 2–3. |
 | `DFIntCSGLevelOfDetailSwitchingDistanceL34` | int | `0` - `1000` | Distancia LOD para calidad gráfica 3–4. |
-| `FIntDebugForceMSAASamples` | int | `1`, `2`, `4` | Fuerza el suavizado MSAA (bordes más suaves, costo en GPU). |
-| `DFFlagDebugPauseVoxelizer` | bool | `true` / `false` | Pausa la iluminación por vóxeles, las sombras y la oclusión ambiental. Gran aumento de FPS. |
-| `FFlagDebugSkyGray` | bool | `true` / `false` | Reemplaza el cielo por un gris plano. Elimina la sobrecarga del sombreador (shader) del cielo. |
-| `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Anula el control deslizante del nivel de gráficos (va más allá del valor predeterminado 1–10). |
-| `FIntFRMMaxGrassDistance` | int | `0` - `1000` | Distancia de renderizado máxima para la hierba del terreno. Establézcalo en `0` para desactivar la hierba. |
-| `FIntFRMMinGrassDistance` | int | `0` - `1000` | Distancia mínima a la que comienza a renderizarse la hierba. |
+| `FIntDebugForceMSAASamples` | int | `1`, `2`, `4` | Fuerza el suavizado de bordes MSAA (bordes más suaves, mayor costo de GPU). |
+| `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Invalida el deslizador de calidad gráfica (supera el valor por defecto de 1–10). |
+| `FIntFRMMaxGrassDistance` | int | `0` - `1000` | Distancia máxima de renderizado del césped del terreno. Use `0` para desactivar el césped. |
+| `FIntFRMMinGrassDistance` | int | `0` - `1000` | Distancia mínima donde comienza a renderizarse el césped. |
 
 ### Estabilidad y VRAM
 
@@ -114,10 +112,8 @@ Para GPUs con menos de 4 GB de VRAM, gráficos integrados o sistemas que experim
     "DFIntCSGLevelOfDetailSwitchingDistanceL12": 75,
     "DFIntCSGLevelOfDetailSwitchingDistanceL23": 100,
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 150,
-    "DFFlagDebugPauseVoxelizer": true,
     "FIntFRMMaxGrassDistance": 0,
-    "FIntGrassMovementReducedMotionFactor": 0,
-    "FFlagDebugSkyGray": true
+    "FIntGrassMovementReducedMotionFactor": 0
   }
 }
 ```
@@ -191,14 +187,46 @@ Sober ejecuta el binario de Android de Roblox dentro de un entorno Linux Flatpak
 </details>
 
 <details>
-<summary><strong>APIs Gráficas: Vulkan frente a OpenGL</strong></summary>
+<summary><strong>APIs gráficas: Vulkan vs. OpenGL</strong></summary>
 
-La selección de la API gráfica se gestiona mediante la configuración del contenedor (wrapper) de Sober, **no** mediante FFlags internas.
+La selección de la API gráfica se gestiona mediante la configuración de Sober, **no** a través de FFlags internas.
 
 - Por defecto, Sober utiliza **Vulkan** para un rendimiento óptimo.
-- Si ya experimenta artefactos gráficos, pantallas negras o fallos de inicio (comunes en GPUs antiguas o configuraciones de portátiles híbridos), fuerce OpenGL estableciendo `"use_opengl": true` en el nivel raíz de su `config.json`.
+- Si experimenta artefactos gráficos, pantallas negras o fallos al iniciar (común en GPU antiguas o portátiles híbridas), fuerce OpenGL estableciendo `"use_opengl": true` en la raíz de su `config.json`.
 
-No use FFlags del motor como `FFlagDebugGraphicsPreferVulkan` o `FFlagDebugGraphicsPreferOpenGL` para esto; pueden causar caídas por discordancia de contexto (context mismatch) al entrar en conflicto con la selección de API a nivel de contenedor de Sober.
+No use FFlags como `FFlagDebugGraphicsPreferVulkan` o `FFlagDebugGraphicsPreferOpenGL` para esto — pueden causar cuelgues por desajuste de contexto.
+
+</details>
+
+<details>
+<summary><strong>Superposición de archivos (texturas y cursores personalizados)</strong></summary>
+
+Sober permite reemplazar los archivos del juego a través del directorio `asset_overlay` ubicado en:
+`~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay`
+
+Los archivos colocados aquí se utilizan con prioridad sobre los predeterminados al reiniciar la aplicación. La estructura de carpetas refleja `packages/*/com.roblox.client/base.apk/assets`.
+
+Ejemplo para cursores de ratón personalizados:
+```
+~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay
+└── content
+    └── textures
+        └── Cursors
+            └── KeyboardMouse
+                ├── ArrowCursor.png
+                ├── ArrowFarCursor.png
+                └── IBeamCursor.png
+```
+Para revertir los cambios, simplemente limpie los archivos del directorio `asset_overlay`.
+
+</details>
+
+<details>
+<summary><strong>Pantalla completa (F11) y controles de salida</strong></summary>
+
+El botón de pantalla completa integrado en Roblox no funciona en versiones móviles de Android. En Sober, presione `F11` para alternar la pantalla completa. Sober recuerda el estado de pantalla completa para los siguientes inicios.
+
+Para cerrar automáticamente la aplicación al salir de una experiencia, agregue `"close_on_leave": true` a su `config.json`.
 
 </details>
 
@@ -242,13 +270,15 @@ Las siguientes flags se encuentran habitualmente en guías antiguas pero ya no e
 
 | Flag | Por qué está obsoleta |
 | :--- | :--- |
-| `DFIntTaskSchedulerTargetFps` | Reemplazada editando `GlobalBasicSettings_13.xml`. |
+| `DFIntTaskSchedulerTargetFps` | Reemplazada por la edición de `GlobalBasicSettings_13.xml`. |
 | `FFlagTaskSchedulerLimitTargetFpsTo2402` | Eliminada de la lista de permitidos. |
+| `DFFlagDebugPauseVoxelizer` | La supresión de iluminación vóxel está bloqueada en la lista actual. |
+| `FFlagDebugSkyGray` | El reemplazo de skybox gris plano está bloqueado en la lista actual. |
 | `DFIntConnectionMTUSize` | Las flags de ajuste de red están bloqueadas. |
 | `FFlagDebugDisableTelemetryEphemeralCounter` | La supresión de telemetría está bloqueada. |
-| `FFlagAdServiceEnabled` | La desactivación del servicio de publicidad está bloqueada. |
+| `FFlagAdServiceEnabled` | La alternancia del servicio de anuncios está bloqueada. |
 | `FFlagMovePrerender` | Las flags de manipulación de hilos están bloqueadas. |
-| `DFIntDebugDynamicRenderKiloPixels` | La escala de resolución de renderizado fue vetada por el equipo de ingeniería de Roblox. |
+| `DFIntDebugDynamicRenderKiloPixels` | La escala de resolución de renderizado fue rechazada por Roblox. |
 
 ---
 
@@ -257,4 +287,6 @@ Las siguientes flags se encuentran habitualmente en guías antiguas pero ya no e
 > [!NOTE]
 > Roblox Corporation mantiene la lista de permitidos de FFlags y esta puede cambiar en cualquier momento con futuras actualizaciones del cliente. Esta guía es precisa a fecha de **julio de 2026**. Verifique siempre con la fuente oficial antes de implementar configuraciones.
 
-**Fuente oficial:** [Allowlist for local client configuration via Fast Flags — Roblox DevForum](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
+**Fuentes oficiales:**
+- [Allowlist for local client configuration via Fast Flags — Roblox DevForum](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
+- [Sober Configuration Tips & Tricks — Documentación de Vinegar](https://vinegarhq.org/Sober/Configuration/TipsAndTricks.html)

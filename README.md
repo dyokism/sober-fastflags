@@ -35,7 +35,7 @@
 
 ## What is Sober?
 
-[Sober](https://sober.vinegarhq.org/) is a compatibility layer that runs the Roblox Android application (APK) natively on Linux desktops. It is distributed as a Flatpak (`org.vinegarhq.Sober`) and uses Vulkan as its primary rendering backend, with OpenGL as a fallback. Configuration is managed through `~/.var/app/org.vinegarhq.Sober/config/sober/config.json`.
+[Sober](https://sober.vinegarhq.org/) is a compatibility layer that runs the Roblox Android application (APK) natively on Linux desktops. It is distributed as a Flatpak (`org.vinegarhq.Sober`) and uses Vulkan as its primary rendering backend, with OpenGL as a fallback. Configuration is managed through `~/.var/app/org.vinegarhq.Sober/config/sober/config.json`. You can also open the settings menu graphically using the command `flatpak run org.vinegarhq.Sober config` or by right-clicking Sober in your application menu and selecting **Settings**.
 
 ## What are FastFlags?
 
@@ -59,9 +59,7 @@ These flags control geometry detail, anti-aliasing, lighting, and grass renderin
 | `DFIntCSGLevelOfDetailSwitchingDistanceL23` | int | `0` - `1000` | LOD distance for Graphics Quality 2–3. |
 | `DFIntCSGLevelOfDetailSwitchingDistanceL34` | int | `0` - `1000` | LOD distance for Graphics Quality 3–4. |
 | `FIntDebugForceMSAASamples` | int | `1`, `2`, `4` | Forces MSAA anti-aliasing (smoother edges, costs GPU). |
-| `DFFlagDebugPauseVoxelizer` | bool | `true` / `false` | Pauses voxel lighting, shadows, and ambient occlusion. Big FPS boost. |
-| `FFlagDebugSkyGray` | bool | `true` / `false` | Replaces skybox with flat gray. Removes sky shader overhead. |
-| `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Overrides the graphics level slider (goes beyond the default 1–10). |
+| `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Overrides the graphics level slider (goes beyond default 1–10). |
 | `FIntFRMMaxGrassDistance` | int | `0` - `1000` | Max render distance for terrain grass. Set to `0` to disable grass. |
 | `FIntFRMMinGrassDistance` | int | `0` - `1000` | Min distance where grass starts rendering. |
 
@@ -109,10 +107,8 @@ For GPUs with less than 4GB VRAM, integrated graphics, or systems experiencing `
     "DFIntCSGLevelOfDetailSwitchingDistanceL12": 75,
     "DFIntCSGLevelOfDetailSwitchingDistanceL23": 100,
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 150,
-    "DFFlagDebugPauseVoxelizer": true,
     "FIntFRMMaxGrassDistance": 0,
-    "FIntGrassMovementReducedMotionFactor": 0,
-    "FFlagDebugSkyGray": true
+    "FIntGrassMovementReducedMotionFactor": 0
   }
 }
 ```
@@ -197,6 +193,38 @@ Do not use engine FFlags like `FFlagDebugGraphicsPreferVulkan` or `FFlagDebugGra
 
 </details>
 
+<details>
+<summary><strong>Asset Overlay (Custom Textures & Cursors)</strong></summary>
+
+Sober allows replacing game assets via the `asset_overlay` directory located at:
+`~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay`
+
+Files placed here take priority over standard Roblox assets upon restarting the app. The directory structure mirrors `packages/*/com.roblox.client/base.apk/assets`.
+
+Example for custom mouse cursors:
+```
+~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay
+└── content
+    └── textures
+        └── Cursors
+            └── KeyboardMouse
+                ├── ArrowCursor.png
+                ├── ArrowFarCursor.png
+                └── IBeamCursor.png
+```
+To revert changes, simply clear out the files from `asset_overlay`.
+
+</details>
+
+<details>
+<summary><strong>Fullscreen (F11) & Exit Controls</strong></summary>
+
+The in-game fullscreen toggle in Roblox does not function on mobile Android builds. On Sober, press `F11` to enter or exit fullscreen mode. Sober remembers the fullscreen state across launches.
+
+To close the app automatically upon leaving an experience, add `"close_on_leave": true` to your `config.json`.
+
+</details>
+
 ---
 
 ## Framerate Uncapping
@@ -239,6 +267,8 @@ The following flags are commonly found in older guides but are **no longer on th
 | :--- | :--- |
 | `DFIntTaskSchedulerTargetFps` | Replaced by editing `GlobalBasicSettings_13.xml`. |
 | `FFlagTaskSchedulerLimitTargetFpsTo2402` | Removed from the allowlist. |
+| `DFFlagDebugPauseVoxelizer` | Voxel lighting suppression is blocked on current allowlist. |
+| `FFlagDebugSkyGray` | Flat gray skybox override is blocked on current allowlist. |
 | `DFIntConnectionMTUSize` | Network tuning flags are blocked. |
 | `FFlagDebugDisableTelemetryEphemeralCounter` | Telemetry suppression is blocked. |
 | `FFlagAdServiceEnabled` | Ad service toggling is blocked. |
@@ -252,4 +282,6 @@ The following flags are commonly found in older guides but are **no longer on th
 > [!NOTE]
 > The FFlag allowlist is maintained by Roblox Corporation and may change at any time with future client updates. This guide is accurate as of **July 2026**. Always verify against the official source before deploying configurations.
 
-**Official Source:** [Allowlist for local client configuration via Fast Flags — Roblox DevForum](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
+**Official Sources:**
+- [Allowlist for local client configuration via Fast Flags — Roblox DevForum](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
+- [Sober Configuration Tips & Tricks — Vinegar Documentation](https://vinegarhq.org/Sober/Configuration/TipsAndTricks.html)

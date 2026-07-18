@@ -35,7 +35,7 @@
 
 ## Apa itu Sober?
 
-[Sober](https://sober.vinegarhq.org/) adalah lapisan kompatibilitas (compatibility layer) yang menjalankan aplikasi Roblox Android (APK) secara native di desktop Linux. Aplikasi ini didistribusikan sebagai Flatpak (`org.vinegarhq.Sober`) dan menggunakan Vulkan sebagai backend rendering utama, dengan OpenGL sebagai cadangan (fallback). Konfigurasi dikelola melalui `~/.var/app/org.vinegarhq.Sober/config/sober/config.json`.
+[Sober](https://sober.vinegarhq.org/) adalah lapisan kompatibilitas (compatibility layer) yang menjalankan aplikasi Roblox Android (APK) secara native di desktop Linux. Aplikasi ini didistribusikan sebagai Flatpak (`org.vinegarhq.Sober`) dan menggunakan Vulkan sebagai backend rendering utama, dengan OpenGL sebagai cadangan (fallback). Konfigurasi dikelola melalui `~/.var/app/org.vinegarhq.Sober/config/sober/config.json`. Anda juga dapat membuka menu pengaturan secara grafis menggunakan perintah `flatpak run org.vinegarhq.Sober config` atau dengan mengklik kanan Sober di menu aplikasi Anda dan memilih **Settings**.
 
 ## Apa itu FastFlags?
 
@@ -59,8 +59,6 @@ Flag ini mengontrol detail geometri, anti-aliasing, pencahayaan, dan jarak rende
 | `DFIntCSGLevelOfDetailSwitchingDistanceL23` | int | `0` - `1000` | Jarak LOD untuk Kualitas Grafis 2–3. |
 | `DFIntCSGLevelOfDetailSwitchingDistanceL34` | int | `0` - `1000` | Jarak LOD untuk Kualitas Grafis 3–4. |
 | `FIntDebugForceMSAASamples` | int | `1`, `2`, `4` | Memaksa anti-aliasing MSAA (tepi lebih halus, membebani GPU). |
-| `DFFlagDebugPauseVoxelizer` | bool | `true` / `false` | Menjeda pencahayaan voxel, bayangan, dan ambient occlusion. Peningkatan FPS yang besar. |
-| `FFlagDebugSkyGray` | bool | `true` / `false` | Mengganti skybox dengan warna abu-abu datar. Menghilangkan beban shader langit. |
 | `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Mengabaikan penggeser tingkat grafis (melampaui batas default 1–10). |
 | `FIntFRMMaxGrassDistance` | int | `0` - `1000` | Jarak render maksimum untuk rumput terrain. Atur ke `0` untuk menonaktifkan rumput. |
 | `FIntFRMMinGrassDistance` | int | `0` - `1000` | Jarak minimum rumput mulai dirender. |
@@ -109,10 +107,8 @@ Untuk GPU dengan VRAM kurang dari 4GB, grafis terintegrasi (integrated graphics)
     "DFIntCSGLevelOfDetailSwitchingDistanceL12": 75,
     "DFIntCSGLevelOfDetailSwitchingDistanceL23": 100,
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 150,
-    "DFFlagDebugPauseVoxelizer": true,
     "FIntFRMMaxGrassDistance": 0,
-    "FIntGrassMovementReducedMotionFactor": 0,
-    "FFlagDebugSkyGray": true
+    "FIntGrassMovementReducedMotionFactor": 0
   }
 }
 ```
@@ -197,6 +193,38 @@ Jangan gunakan FFlags engine seperti `FFlagDebugGraphicsPreferVulkan` or `FFlagD
 
 </details>
 
+<details>
+<summary><strong>Asset Overlay (Tekstur & Kursor Kustom)</strong></summary>
+
+Sober memungkinkan penggantian aset game melalui direktori `asset_overlay` yang terletak di:
+`~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay`
+
+File yang ditempatkan di sini akan diprioritaskan dibandingkan aset standar Roblox setelah aplikasi di-restart. Struktur folder mencerminkan `packages/*/com.roblox.client/base.apk/assets`.
+
+Contoh untuk kursor mouse kustom:
+```
+~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay
+└── content
+    └── textures
+        └── Cursors
+            └── KeyboardMouse
+                ├── ArrowCursor.png
+                ├── ArrowFarCursor.png
+                └── IBeamCursor.png
+```
+Untuk mengembalikan ke default, cukup hapus file dari direktori `asset_overlay`.
+
+</details>
+
+<details>
+<summary><strong>Layar Penuh (F11) & Kontrol Keluar</strong></summary>
+
+Tombol layar penuh (fullscreen) bawaan Roblox tidak berfungsi pada biner Android seluler. Di Sober, tekan `F11` untuk masuk atau keluar dari mode layar penuh. Sober menyimpan status layar penuh untuk peluncuran berikutnya.
+
+Untuk menutup aplikasi secara otomatis saat meninggalkan permainan, tambahkan `"close_on_leave": true` ke file `config.json` Anda.
+
+</details>
+
 ---
 
 ## Membuka Batas Framerate (FPS)
@@ -239,6 +267,8 @@ Flag berikut biasanya ditemukan dalam panduan yang lebih lama tetapi tidak lagi 
 | :--- | :--- |
 | `DFIntTaskSchedulerTargetFps` | Digantikan dengan mengedit `GlobalBasicSettings_13.xml`. |
 | `FFlagTaskSchedulerLimitTargetFpsTo2402` | Dihapus dari allowlist. |
+| `DFFlagDebugPauseVoxelizer` | Penekanan pencahayaan voxel diblokir pada allowlist saat ini. |
+| `FFlagDebugSkyGray` | Pengabaian skybox abu-abu datar diblokir pada allowlist saat ini. |
 | `DFIntConnectionMTUSize` | Flag penyetelan jaringan diblokir. |
 | `FFlagDebugDisableTelemetryEphemeralCounter` | Penekanan telemetri diblokir. |
 | `FFlagAdServiceEnabled` | Peralihan layanan iklan diblokir. |
@@ -252,4 +282,6 @@ Flag berikut biasanya ditemukan dalam panduan yang lebih lama tetapi tidak lagi 
 > [!NOTE]
 > Allowlist FFlag dikelola oleh Roblox Corporation dan dapat berubah kapan saja seiring dengan pembaruan klien di masa mendatang. Panduan ini akurat per **Juli 2026**. Selalu verifikasi dengan sumber resmi sebelum menerapkan konfigurasi.
 
-**Sumber Resmi:** [Allowlist for local client configuration via Fast Flags — Roblox DevForum](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
+**Sumber Resmi:**
+- [Allowlist for local client configuration via Fast Flags — Roblox DevForum](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
+- [Sober Configuration Tips & Tricks — Dokumentasi Vinegar](https://vinegarhq.org/Sober/Configuration/TipsAndTricks.html)
