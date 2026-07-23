@@ -62,6 +62,10 @@ Flag ini mengontrol detail geometri, anti-aliasing, pencahayaan, dan jarak rende
 | `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Mengabaikan penggeser tingkat grafis (melampaui batas default 1–10). |
 | `FIntFRMMaxGrassDistance` | int | `0` - `1000` | Jarak render maksimum untuk rumput terrain. Atur ke `0` untuk menonaktifkan rumput. |
 | `FIntFRMMinGrassDistance` | int | `0` - `1000` | Jarak minimum rumput mulai dirender. |
+| `DFFlagDebugPauseVoxelizer` | bool | `true` / `false` | Menonaktifkan pencahayaan voxel. |
+| `FFlagDebugSkyGray` | bool | `true` / `false` | Mengubah warna skybox menjadi abu-abu. |
+| `FFlagDebugGraphicsPreferVulkan` | bool | `true` / `false` | Memprioritaskan Vulkan untuk rendering. |
+| `FFlagDebugGraphicsPreferOpenGL` | bool | `true` / `false` | Memprioritaskan OpenGL untuk rendering. |
 
 ### Stabilitas & VRAM
 
@@ -81,7 +85,7 @@ Flag minor yang memengaruhi kenyamanan visual dan perilaku antarmuka.
 
 | Nama Flag | Tipe | Rentang Nilai | Fungsi / Kegunaan |
 | :--- | :--- | :--- | :--- |
-| `FIntGrassMovementReducedMotionFactor` | int | `0` - `1000` | Mengontrol intensitas animasi lambaian rumput. `0` = benar-benar beku. |
+| `FIntGrassMovementReducedMotionFactor` | bool | `true` / `false` | Mengurangi gerakan animasi rumput. *(Catatan: Menggunakan awalan nama `FInt` tetapi membutuhkan nilai boolean `true`/`false`).* |
 
 ---
 
@@ -108,7 +112,7 @@ Untuk GPU dengan VRAM kurang dari 4GB, grafis terintegrasi (integrated graphics)
     "DFIntCSGLevelOfDetailSwitchingDistanceL23": 100,
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 150,
     "FIntFRMMaxGrassDistance": 0,
-    "FIntGrassMovementReducedMotionFactor": 0
+    "FIntGrassMovementReducedMotionFactor": true
   }
 }
 ```
@@ -129,7 +133,7 @@ Untuk GPU kelas menengah (seperti GTX 1650, RX 580) dengan VRAM 4-6GB. Keseimban
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 500,
     "FIntDebugForceMSAASamples": 2,
     "FIntFRMMaxGrassDistance": 200,
-    "FIntGrassMovementReducedMotionFactor": 50
+    "FIntGrassMovementReducedMotionFactor": true
   }
 }
 ```
@@ -184,12 +188,10 @@ Sober menjalankan file biner Android Roblox di dalam lingkungan Flatpak Linux. B
 <details>
 <summary><strong>API Grafis: Vulkan vs. OpenGL</strong></summary>
 
-Pemilihan API Grafis dikelola oleh konfigurasi wrapper Sober, **bukan** oleh FFlags internal.
+Pemilihan API Grafis dapat dikonfigurasi melalui `config.json` atau FFlags (`FFlagDebugGraphicsPreferVulkan` / `FFlagDebugGraphicsPreferOpenGL`).
 
 - Secara default, Sober menggunakan **Vulkan** untuk performa optimal.
-- Jika Anda mengalami artefak grafis, layar hitam, atau crash saat startup (umum terjadi pada GPU lama atau setup laptop hybrid), paksa penggunaan OpenGL dengan mengatur `"use_opengl": true` di tingkat root file `config.json` Anda.
-
-Jangan gunakan FFlags engine seperti `FFlagDebugGraphicsPreferVulkan` or `FFlagDebugGraphicsPreferOpenGL` untuk hal ini — flag tersebut dapat menyebabkan crash ketidakcocokan konteks (context mismatch) saat konflik dengan pemilihan API tingkat wrapper Sober.
+- Jika Anda mengalami artefak grafis, layar hitam, atau crash saat startup (umum terjadi pada GPU lama atau setup laptop hybrid), dokumentasi resmi Vinegar menyarankan untuk menjalankan `flatpak run org.vinegarhq.Sober config` di terminal dan memilih **Force Legacy Rendering** (atau mengatur `"use_opengl": true` di `config.json`).
 
 </details>
 
@@ -267,8 +269,6 @@ Flag berikut biasanya ditemukan dalam panduan yang lebih lama tetapi tidak lagi 
 | :--- | :--- |
 | `DFIntTaskSchedulerTargetFps` | Digantikan dengan mengedit `GlobalBasicSettings_13.xml`. |
 | `FFlagTaskSchedulerLimitTargetFpsTo2402` | Dihapus dari allowlist. |
-| `DFFlagDebugPauseVoxelizer` | Penekanan pencahayaan voxel diblokir pada allowlist saat ini. |
-| `FFlagDebugSkyGray` | Pengabaian skybox abu-abu datar diblokir pada allowlist saat ini. |
 | `DFIntConnectionMTUSize` | Flag penyetelan jaringan diblokir. |
 | `FFlagDebugDisableTelemetryEphemeralCounter` | Penekanan telemetri diblokir. |
 | `FFlagAdServiceEnabled` | Peralihan layanan iklan diblokir. |

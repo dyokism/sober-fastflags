@@ -62,6 +62,10 @@ These flags control geometry detail, anti-aliasing, lighting, and grass renderin
 | `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Overrides the graphics level slider (goes beyond default 1–10). |
 | `FIntFRMMaxGrassDistance` | int | `0` - `1000` | Max render distance for terrain grass. Set to `0` to disable grass. |
 | `FIntFRMMinGrassDistance` | int | `0` - `1000` | Min distance where grass starts rendering. |
+| `DFFlagDebugPauseVoxelizer` | bool | `true` / `false` | Disables voxel lighting. |
+| `FFlagDebugSkyGray` | bool | `true` / `false` | Overrides skybox color to gray and removes atmospheric stars. |
+| `FFlagDebugGraphicsPreferVulkan` | bool | `true` / `false` | Prefers Vulkan for rendering. |
+| `FFlagDebugGraphicsPreferOpenGL` | bool | `true` / `false` | Prefers OpenGL for rendering. |
 
 ### Stability & VRAM
 
@@ -81,7 +85,7 @@ Minor flags that affect visual comfort and interface behavior.
 
 | Flag Name | Type | Value Range | What It Does |
 | :--- | :--- | :--- | :--- |
-| `FIntGrassMovementReducedMotionFactor` | int | `0` - `1000` | Controls grass waving animation intensity. `0` = completely frozen. |
+| `FIntGrassMovementReducedMotionFactor` | bool | `true` / `false` | Reduces motion for grass animations. *(Note: Uses `FInt` name prefix but expects boolean `true`/`false`).* |
 
 ---
 
@@ -108,7 +112,7 @@ For GPUs with less than 4GB VRAM, integrated graphics, or systems experiencing `
     "DFIntCSGLevelOfDetailSwitchingDistanceL23": 100,
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 150,
     "FIntFRMMaxGrassDistance": 0,
-    "FIntGrassMovementReducedMotionFactor": 0
+    "FIntGrassMovementReducedMotionFactor": true
   }
 }
 ```
@@ -129,7 +133,7 @@ For mid-tier GPUs (GTX 1650, RX 580 class) with 4–6GB VRAM. Good balance betwe
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 500,
     "FIntDebugForceMSAASamples": 2,
     "FIntFRMMaxGrassDistance": 200,
-    "FIntGrassMovementReducedMotionFactor": 50
+    "FIntGrassMovementReducedMotionFactor": true
   }
 }
 ```
@@ -184,12 +188,10 @@ Sober runs the Roblox Android binary inside a Linux Flatpak environment. The And
 <details>
 <summary><strong>Graphics APIs: Vulkan vs. OpenGL</strong></summary>
 
-Graphics API selection is managed by the Sober wrapper config, **not** by internal FFlags.
+Graphics API selection can be configured via `config.json` or FFlags (`FFlagDebugGraphicsPreferVulkan` / `FFlagDebugGraphicsPreferOpenGL`).
 
 - By default, Sober uses **Vulkan** for optimal performance.
-- If you experience graphic artifacts, black screens, or startup crashes (common on older GPUs or hybrid laptop setups), force OpenGL by setting `"use_opengl": true` at the root level of your `config.json`.
-
-Do not use engine FFlags like `FFlagDebugGraphicsPreferVulkan` or `FFlagDebugGraphicsPreferOpenGL` for this — they can cause context mismatch crashes when they conflict with Sober's wrapper-level API selection.
+- If you experience graphic artifacts, black screens, or startup crashes (common on older GPUs or hybrid laptop setups), official Vinegar documentation recommends running `flatpak run org.vinegarhq.Sober config` in your terminal and selecting **Force Legacy Rendering** (or setting `"use_opengl": true` in `config.json`).
 
 </details>
 
@@ -267,8 +269,6 @@ The following flags are commonly found in older guides but are **no longer on th
 | :--- | :--- |
 | `DFIntTaskSchedulerTargetFps` | Replaced by editing `GlobalBasicSettings_13.xml`. |
 | `FFlagTaskSchedulerLimitTargetFpsTo2402` | Removed from the allowlist. |
-| `DFFlagDebugPauseVoxelizer` | Voxel lighting suppression is blocked on current allowlist. |
-| `FFlagDebugSkyGray` | Flat gray skybox override is blocked on current allowlist. |
 | `DFIntConnectionMTUSize` | Network tuning flags are blocked. |
 | `FFlagDebugDisableTelemetryEphemeralCounter` | Telemetry suppression is blocked. |
 | `FFlagAdServiceEnabled` | Ad service toggling is blocked. |

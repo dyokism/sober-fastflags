@@ -67,6 +67,10 @@ Estas flags controlan el detalle de la geometría, el suavizado de líneas (anti
 | `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Invalida el deslizador de calidad gráfica (supera el valor por defecto de 1–10). |
 | `FIntFRMMaxGrassDistance` | int | `0` - `1000` | Distancia máxima de renderizado del césped del terreno. Use `0` para desactivar el césped. |
 | `FIntFRMMinGrassDistance` | int | `0` - `1000` | Distancia mínima donde comienza a renderizarse el césped. |
+| `DFFlagDebugPauseVoxelizer` | bool | `true` / `false` | Desactiva la iluminación por vóxeles. |
+| `FFlagDebugSkyGray` | bool | `true` / `false` | Cambia el color del skybox a gris y elimina las estrellas atmosféricas. |
+| `FFlagDebugGraphicsPreferVulkan` | bool | `true` / `false` | Prefiere Vulkan para el renderizado. |
+| `FFlagDebugGraphicsPreferOpenGL` | bool | `true` / `false` | Prefiere OpenGL para el renderizado. |
 
 ### Estabilidad y VRAM
 
@@ -86,7 +90,7 @@ Flags menores que afectan a la comodidad visual y al comportamiento de la interf
 
 | Nombre de la Flag | Tipo | Rango de valores | Qué hace |
 | :--- | :--- | :--- | :--- |
-| `FIntGrassMovementReducedMotionFactor` | int | `0` - `1000` | Controla la intensidad de la animación del movimiento de la hierba. `0` = completamente estática. |
+| `FIntGrassMovementReducedMotionFactor` | bool | `true` / `false` | Reduce la animación del movimiento de la hierba. *(Nota: Utiliza el prefijo `FInt` pero requiere un valor booleano `true`/`false`).* |
 
 ---
 
@@ -113,7 +117,7 @@ Para GPUs con menos de 4 GB de VRAM, gráficos integrados o sistemas que experim
     "DFIntCSGLevelOfDetailSwitchingDistanceL23": 100,
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 150,
     "FIntFRMMaxGrassDistance": 0,
-    "FIntGrassMovementReducedMotionFactor": 0
+    "FIntGrassMovementReducedMotionFactor": true
   }
 }
 ```
@@ -134,7 +138,7 @@ Para GPUs de gama media (clase GTX 1650, RX 580) con 4–6 GB de VRAM. Buen equi
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 500,
     "FIntDebugForceMSAASamples": 2,
     "FIntFRMMaxGrassDistance": 200,
-    "FIntGrassMovementReducedMotionFactor": 50
+    "FIntGrassMovementReducedMotionFactor": true
   }
 }
 ```
@@ -158,7 +162,7 @@ Para sistemas de gama alta con más de 8 GB de VRAM. Fuerza el máximo detalle, 
 ```
 
 > [!TIP]
-> Puede mezclar y combinar flags entre preajustes. Por ejemplo, use las distancias LOD del preajuste Equilibrado con la calidad máxima de texturas si su GPU tiene suficiente VRAM pero tiene problemas con la geometría.
+> Puede combinar flags de diferentes preajustes. Por ejemplo, use las distancias LOD del Preset 2 con la calidad de texturas del Preset 3 si su GPU tiene suficiente VRAM pero sufre con la geometría.
 
 ---
 
@@ -189,12 +193,10 @@ Sober ejecuta el binario de Android de Roblox dentro de un entorno Linux Flatpak
 <details>
 <summary><strong>APIs gráficas: Vulkan vs. OpenGL</strong></summary>
 
-La selección de la API gráfica se gestiona mediante la configuración de Sober, **no** a través de FFlags internas.
+La selección de la API gráfica se puede configurar en `config.json` o mediante FFlags (`FFlagDebugGraphicsPreferVulkan` / `FFlagDebugGraphicsPreferOpenGL`).
 
 - Por defecto, Sober utiliza **Vulkan** para un rendimiento óptimo.
-- Si experimenta artefactos gráficos, pantallas negras o fallos al iniciar (común en GPU antiguas o portátiles híbridas), fuerce OpenGL estableciendo `"use_opengl": true` en la raíz de su `config.json`.
-
-No use FFlags como `FFlagDebugGraphicsPreferVulkan` o `FFlagDebugGraphicsPreferOpenGL` para esto — pueden causar cuelgues por desajuste de contexto.
+- Si experimenta artefactos gráficos, pantallas negras o fallos al iniciar (común en GPU antiguas o portátiles híbridas), la documentación oficial de Vinegar recomienda ejecutar `flatpak run org.vinegarhq.Sober config` en su terminal y seleccionar **Force Legacy Rendering** (o establecer `"use_opengl": true` en `config.json`).
 
 </details>
 
@@ -272,8 +274,6 @@ Las siguientes flags se encuentran habitualmente en guías antiguas pero ya no e
 | :--- | :--- |
 | `DFIntTaskSchedulerTargetFps` | Reemplazada por la edición de `GlobalBasicSettings_13.xml`. |
 | `FFlagTaskSchedulerLimitTargetFpsTo2402` | Eliminada de la lista de permitidos. |
-| `DFFlagDebugPauseVoxelizer` | La supresión de iluminación vóxel está bloqueada en la lista actual. |
-| `FFlagDebugSkyGray` | El reemplazo de skybox gris plano está bloqueado en la lista actual. |
 | `DFIntConnectionMTUSize` | Las flags de ajuste de red están bloqueadas. |
 | `FFlagDebugDisableTelemetryEphemeralCounter` | La supresión de telemetría está bloqueada. |
 | `FFlagAdServiceEnabled` | La alternancia del servicio de anuncios está bloqueada. |

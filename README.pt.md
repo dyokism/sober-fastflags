@@ -47,7 +47,7 @@
 FastFlags (FFlags) são variáveis internas da engine do Roblox que controlam renderização, interface, estabilidade e mais. Desde **29 de setembro de 2025**, o Roblox impõe uma lista de permissões (allowlist) rígida — apenas um pequeno subconjunto de flags pode ser substituído localmente por meio de arquivos de configuração. Qualquer flag fora da allowlist é silenciosamente ignorada pelo cliente.
 
 > [!IMPORTANT]
-> Este guia cobre apenas as flags confirmadas como parte da allowlist atual. Flags de guias de comunidade mais antigos podem não funcionar mais.
+> Este guia cobre apenas as flags confirmadas como parte da allowlist atual.
 
 ---
 
@@ -67,6 +67,10 @@ Estas flags controlam o nível de detalhes geométricos, anti-aliasing, ilumina�
 | `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Sobrescreve o seletor de nível gráfico (vai além do padrão 1–10). |
 | `FIntFRMMaxGrassDistance` | int | `0` - `1000` | Distância máxima de renderização da grama do terreno. Defina `0` para desativar a grama. |
 | `FIntFRMMinGrassDistance` | int | `0` - `1000` | Distância mínima onde a grama começa a ser renderizada. |
+| `DFFlagDebugPauseVoxelizer` | bool | `true` / `false` | Desativa a iluminação por voxels. |
+| `FFlagDebugSkyGray` | bool | `true` / `false` | Altera a cor do skybox para cinza e remove estrelas atmosféricas. |
+| `FFlagDebugGraphicsPreferVulkan` | bool | `true` / `false` | Prefere Vulkan para renderização. |
+| `FFlagDebugGraphicsPreferOpenGL` | bool | `true` / `false` | Prefere OpenGL para renderização. |
 
 ### Estabilidade & VRAM
 
@@ -86,7 +90,7 @@ Flags menores que afetam o conforto visual e o comportamento da interface.
 
 | Nome da Flag | Tipo | Intervalo de Valores | O que Faz |
 | :--- | :--- | :--- | :--- |
-| `FIntGrassMovementReducedMotionFactor` | int | `0` - `1000` | Controla a intensidade da animação de balanço da grama. `0` = completamente estática. |
+| `FIntGrassMovementReducedMotionFactor` | bool | `true` / `false` | Reduz o movimento de animação da grama. *(Nota: Usa o prefixo `FInt`, mas requer valor booleano `true`/`false`).* |
 
 ---
 
@@ -113,7 +117,7 @@ Para GPUs com menos de 4GB de VRAM, gráficos integrados ou sistemas com crashes
     "DFIntCSGLevelOfDetailSwitchingDistanceL23": 100,
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 150,
     "FIntFRMMaxGrassDistance": 0,
-    "FIntGrassMovementReducedMotionFactor": 0
+    "FIntGrassMovementReducedMotionFactor": true
   }
 }
 ```
@@ -134,7 +138,7 @@ Para GPUs intermediárias (classe GTX 1650, RX 580) com 4–6GB de VRAM. Bom equ
     "DFIntCSGLevelOfDetailSwitchingDistanceL34": 500,
     "FIntDebugForceMSAASamples": 2,
     "FIntFRMMaxGrassDistance": 200,
-    "FIntGrassMovementReducedMotionFactor": 50
+    "FIntGrassMovementReducedMotionFactor": true
   }
 }
 ```
@@ -158,7 +162,7 @@ Para sistemas de alto desempenho com 8GB+ de VRAM. Força o máximo de detalhes,
 ```
 
 > [!TIP]
-> Você pode misturar e combinar flags entre as predefinições. Por exemplo, use as distâncias de LOD da predefinição Equilibrada com a qualidade de textura Máxima se a sua GPU tiver VRAM suficiente, mas sofrer com geometria.
+> Você pode combinar flags entre diferentes predefinições. Por exemplo, use as distâncias LOD da Predefinição 2 com a qualidade máxima de textura se sua GPU tiver VRAM suficiente.
 
 ---
 
@@ -189,12 +193,10 @@ O Sober executa o binário Android do Roblox dentro de um ambiente Flatpak no Li
 <details>
 <summary><strong>APIs Gráficas: Vulkan vs. OpenGL</strong></summary>
 
-A seleção da API gráfica é gerenciada pelas configurações do Sober, **não** por FFlags internas.
+A seleção da API gráfica pode ser configurada via `config.json` ou FFlags (`FFlagDebugGraphicsPreferVulkan` / `FFlagDebugGraphicsPreferOpenGL`).
 
 - Por padrão, o Sober usa **Vulkan** para desempenho ideal.
-- Se você tiver artefatos visuais, tela preta ou travamentos ao iniciar (comum em GPUs antigas ou notebooks híbridos), force o uso de OpenGL definindo `"use_opengl": true` na raiz do seu `config.json`.
-
-Não use FFlags como `FFlagDebugGraphicsPreferVulkan` ou `FFlagDebugGraphicsPreferOpenGL` para isso — elas podem causar travamentos por incompatibilidade de contexto.
+- Se você tiver artefatos visuais, tela preta ou travamentos ao iniciar (comum em GPUs antigas ou notebooks híbridos), a documentação oficial do Vinegar recomenda executar `flatpak run org.vinegarhq.Sober config` no terminal e selecionar **Force Legacy Rendering** (ou definir `"use_opengl": true` no `config.json`).
 
 </details>
 
@@ -272,8 +274,6 @@ As seguintes flags costumam ser encontradas em guias antigos, mas não fazem mai
 | :--- | :--- |
 | `DFIntTaskSchedulerTargetFps` | Substituída pela edição de `GlobalBasicSettings_13.xml`. |
 | `FFlagTaskSchedulerLimitTargetFpsTo2402` | Removida da lista de permissões. |
-| `DFFlagDebugPauseVoxelizer` | A supressão de iluminação voxel está bloqueada na lista atual. |
-| `FFlagDebugSkyGray` | A substituição por céu cinza plano está bloqueada na lista atual. |
 | `DFIntConnectionMTUSize` | Flags de ajuste de rede foram bloqueadas. |
 | `FFlagDebugDisableTelemetryEphemeralCounter` | Bloqueio de envio de telemetria foi impedido. |
 | `FFlagAdServiceEnabled` | Alternância do serviço de anúncios foi bloqueada. |
