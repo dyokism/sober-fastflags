@@ -2,7 +2,7 @@
 <p align="center">适用于 Linux 上 Sober 客户端的经验证、安全且在白名单（allowlist）内的 FastFlags。</p>
 
 <p align="center">
-  <b>Traducciones / Translations:</b>
+  <b>Translations:</b>
   <a href="README.md">English</a> |
   <a href="README.es.md">Español</a> |
   <a href="README.zh.md">简体中文</a> |
@@ -10,13 +10,6 @@
   <a href="README.id.md">Bahasa Indonesia</a> |
   <a href="README.pt.md">Português</a>
 </p>
-
----
-
-> [!NOTE]
-> 本指南是由人工智能（AI）翻译的。欢迎人工校对和贡献以提高翻译质量。如果您发现任何错误，欢迎提交 Pull Request！
-
----
 
 ## 目录
 
@@ -36,20 +29,16 @@
 - [已弃用的 FFlags](#已弃用的-fflags)
 - [免责声明与来源](#免责声明与来源)
 
----
-
 ## 什么是 Sober？
 
-[Sober](https://sober.vinegarhq.org/) 是一个在 Linux 桌面原生运行 Roblox Android 应用 (APK) 的兼容层。它以 Flatpak (`org.vinegarhq.Sober`) 格式分发，使用 Vulkan 作为主渲染后端，并以 OpenGL 作为备用（fallback）。配置文件路径为 `~/.var/app/org.vinegarhq.Sober/config/sober/config.json`。您也可以在终端执行 `flatpak run org.vinegarhq.Sober config` 或在应用菜单中右键点击 Sober 并选择 **Settings** 来打开图形化设置菜单。
+[Sober](https://sober.vinegarhq.org/) 是一个在 Linux 桌面原生运行 Roblox Android 应用 (APK) 的兼容层。它以 Flatpak (`org.vinegarhq.Sober`) 格式分发，使用 Vulkan 作为主渲染后端，并以 OpenGL 作为备用。配置文件路径为 `~/.var/app/org.vinegarhq.Sober/config/sober/config.json`。您也可以在终端执行 `flatpak run org.vinegarhq.Sober config` 或在应用菜单中右键点击 Sober 并选择 **Settings** 来打开图形化设置菜单。
 
 ## 什么是 FastFlags？
 
-FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界面、稳定性和其他功能。自 **2025 年 9 月 29 日**起，Roblox 开始执行严格的白名单政策——只有少数白名单内的 FFlags 可以通过本地配置文件进行覆盖。任何不在白名单内的 flag 都会被客户端静默忽略。
+FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界面、稳定性和其他设置。自 2025 年 9 月 29 日起，Roblox 开始执行严格的白名单政策：只有少数白名单内的 FFlags 可以通过本地配置文件进行覆盖。任何不在白名单内的 flag 都会被客户端忽略。
 
 > [!IMPORTANT]
-> 本指南仅包含**确认位于当前白名单内**的 flag。旧版社区指南中的许多 flag 可能已失效。
-
----
+> 本指南仅包含确认位于当前白名单内的 flag。旧版社区指南中的许多 flag 可能已失效。
 
 ## 确认有效的 FFlags
 
@@ -60,11 +49,11 @@ FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界�
 | Flag 名称 | 类型 | 取值范围 | 功能描述 |
 | :--- | :--- | :--- | :--- |
 | `DFIntCSGLevelOfDetailSwitchingDistance` | int | `0` - `1000` | CSG 模型的主 LOD 剔除距离。数值越低 = 帧率越高。 |
-| `DFIntCSGLevelOfDetailSwitchingDistanceL12` | int | `0` - `1000` | 图形质量 1–2 时的 LOD 距离。 |
-| `DFIntCSGLevelOfDetailSwitchingDistanceL23` | int | `0` - `1000` | 图形质量 2–3 时的 LOD 距离。 |
-| `DFIntCSGLevelOfDetailSwitchingDistanceL34` | int | `0` - `1000` | 图形质量 3–4 时的 LOD 距离。 |
+| `DFIntCSGLevelOfDetailSwitchingDistanceL12` | int | `0` - `1000` | 图形质量 1 到 2 时的 LOD 距离。 |
+| `DFIntCSGLevelOfDetailSwitchingDistanceL23` | int | `0` - `1000` | 图形质量 2 到 3 时的 LOD 距离。 |
+| `DFIntCSGLevelOfDetailSwitchingDistanceL34` | int | `0` - `1000` | 图形质量 3 到 4 时的 LOD 距离。 |
 | `FIntDebugForceMSAASamples` | int | `1`, `2`, `4` | 强制开启 MSAA 抗锯齿（边缘更平滑，消耗 GPU）。 |
-| `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | 覆盖图形质量滑块（突破默认的 1–10 限制）。 |
+| `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | 覆盖图形质量滑块（突破默认的 1 到 10 限制）。 |
 | `FIntFRMMaxGrassDistance` | int | `0` - `1000` | 地形草的最大渲染距离。设置为 `0` 可禁用草。 |
 | `FIntFRMMinGrassDistance` | int | `0` - `1000` | 草开始渲染的最小距离。 |
 | `DFFlagDebugPauseVoxelizer` | bool | `true` / `false` | 禁用体素照明。 |
@@ -82,7 +71,7 @@ FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界�
 | `DFIntTextureQualityOverride` | int | `0` - `3` | 设置贴图纹理质量（0 = 最低，3 = 最高）。 |
 
 > [!WARNING]
-> 在显存为 4GB 或更低的显卡上将 `DFIntTextureQualityOverride` 设置为 `3` 极易导致瞬间发生 `RBXCRASH: OutOfMemory`（显存不足）崩溃。建议使用 `2` 或 `1` 以确保稳定。
+> 在显存为 4 GB 或更低的显卡上将 `DFIntTextureQualityOverride` 设置为 `3` 容易导致瞬间发生 `RBXCRASH: OutOfMemory`（显存不足）崩溃。建议使用 `2` 或 `1` 以确保稳定。
 
 ### 界面与环境
 
@@ -91,8 +80,6 @@ FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界�
 | Flag 名称 | 类型 | 取值范围 | 功能描述 |
 | :--- | :--- | :--- | :--- |
 | `FIntGrassMovementReducedMotionFactor` | bool | `true` / `false` | 减少草地摆动动画。*(注意：虽然前缀为 `FInt`，但接受布尔值 `true`/`false`)*。 |
-
----
 
 ## 配置预设
 
@@ -104,7 +91,7 @@ FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界�
 
 ### 预设 1：低端配置 / 显存崩溃修复
 
-适用于显存不足 4GB 的显卡、核显，或经常遇到 `OutOfMemory` 崩溃的系统。
+适用于显存不足 4 GB 的显卡、核显，或经常遇到 `OutOfMemory` 崩溃的系统。
 
 ```json
 {
@@ -124,7 +111,7 @@ FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界�
 
 ### 预设 2：平衡配置 / 中端配置
 
-适用于具有 4–6GB 显存的中端显卡（如 GTX 1650、RX 580 级别）。在画质与性能之间取得良好平衡。
+适用于具有 4 到 6 GB 显存的中端显卡（如 GTX 1650、RX 580 级别）。在画质与性能之间取得良好平衡。
 
 ```json
 {
@@ -145,7 +132,7 @@ FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界�
 
 ### 预设 3：极致画质
 
-适用于拥有 8GB 以上显存的高端系统。强制启用最高画质细节、抗锯齿和贴图质量。
+适用于拥有 8 GB 以上显存的高端系统。强制启用最高画质细节、抗锯齿和贴图质量。
 
 ```json
 {
@@ -164,8 +151,6 @@ FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界�
 > [!TIP]
 > 您可以自由组合不同预设中的 flag。例如，如果您的显卡显存充足但几何计算性能不足，可以使用“平衡配置”的 LOD 距离以及“极致画质”的贴图质量。
 
----
-
 ## 深度探讨
 
 <details>
@@ -173,7 +158,7 @@ FastFlags (FFlags) 是 Roblox 引擎的内部变量，用于控制渲染、界�
 
 Roblox 地图经常使用复杂的构造实体几何（CSG）联合体。在远距离渲染这些物体会给 CPU 和 GPU 带来沉重负担。
 
-通过降低 `DFIntCSGLevelOfDetailSwitchingDistance`（例如设为 150），可以强制游戏在离相机较近的距离就将复杂的模型替换为低多边形（low-poly）版本。这可以在不改变物理碰撞箱（hitbox）的前提下显著提升帧率——物体的碰撞行为完全一致，只是从远处看显得较为简易。
+通过降低 `DFIntCSGLevelOfDetailSwitchingDistance`（例如设为 150），可以强制游戏在离相机较近的距离就将复杂的模型替换为低多边形（low-poly）版本。这可以在不改变物理碰撞箱（hitbox）的前提下提升帧率：物体的碰撞行为完全一致，只是从远处看显得较为简易。
 
 分级变体（`L12`、`L23`、`L34`）允许您针对不同的画质等级进行微调，从而使低画质设置下的模型剔除（cull）表现得更加激进。
 
@@ -184,9 +169,9 @@ Roblox 地图经常使用复杂的构造实体几何（CSG）联合体。在远�
 
 Sober 在 Linux Flatpak 环境中运行 Roblox Android 二进制文件。Android 端程序默认采用的是移动端的共享内存模型，这与桌面端 Linux 显卡驱动处理显存（VRAM）的方式不同。
 
-**问题所在：**当引擎请求最高画质的纹理时，可能会迅速耗尽显卡的独立显存。在 Windows 桌面端，显卡驱动会将超出限制的数据转移到系统内存中。而在 Linux 上（特别是使用 NVIDIA 闭源驱动时），这种后备机制并不可靠，从而导致瞬间发生 `RBXCRASH: OutOfMemory` 崩溃。
+当引擎请求最高画质的纹理时，可能会迅速耗尽显卡的独立显存。在 Windows 桌面端，显卡驱动会将超出限制的数据转移到系统内存中。而在 Linux 上（特别是使用 NVIDIA 闭源驱动时），这种后备机制并不可靠，从而导致瞬间发生 `RBXCRASH: OutOfMemory` 崩溃。
 
-**解决办法：**将 `DFFlagTextureQualityOverrideEnabled` 设置为 `true`，并将 `DFIntTextureQualityOverride` 设置为 `2`（中等质量）或 `1`（低质量）。这将强制引擎从服务器请求分辨率较低的贴图，从而将显存占用限制在安全范围内。
+解决办法：将 `DFFlagTextureQualityOverrideEnabled` 设置为 `true`，并将 `DFIntTextureQualityOverride` 设置为 `2`（中等质量）或 `1`（低质量）。这将强制引擎从服务器请求分辨率较低的贴图，从而将显存占用限制在安全范围内。
 
 </details>
 
@@ -195,7 +180,7 @@ Sober 在 Linux Flatpak 环境中运行 Roblox Android 二进制文件。Android
 
 图形 API 的选择可通过 `config.json` 或 FFlags（`FFlagDebugGraphicsPreferVulkan` / `FFlagDebugGraphicsPreferOpenGL`）配置。
 
-- 默认情况下，Sober 使用 **Vulkan** 以获得最佳性能。
+- 默认情况下，Sober 使用 Vulkan 以获得最佳性能。
 - 如果遇到图形异常、黑屏或启动崩溃（常见于较旧的 GPU 或混合显卡笔记本），Vinegar 官方文档建议在终端运行 `flatpak run org.vinegarhq.Sober config` 并选择 **Force Legacy Rendering**（或在 `config.json` 根节点设置 `"use_opengl": true`）。
 
 </details>
@@ -219,7 +204,7 @@ Sober 允许通过 `asset_overlay` 目录替换游戏资源，路径为：
                 ├── ArrowFarCursor.png
                 └── IBeamCursor.png
 ```
-要还原更改，只需清空 `asset_overlay` 目录中的文件。
+要还原更改，清空 `asset_overlay` 目录中的文件即可。
 
 </details>
 
@@ -232,11 +217,9 @@ Roblox 游戏内置的全屏切换按键在移动端 Android 构建中不起作�
 
 </details>
 
----
-
 ## 解锁帧率（FPS）上限
 
-FastFlag `DFIntTaskSchedulerTargetFps` 已不再起作用——它已被移出白名单。要更改帧率限制，您必须直接编辑 XML 配置文件。
+FastFlag `DFIntTaskSchedulerTargetFps` 已不再起作用，因为 Roblox 已将其移出白名单。要更改帧率限制，您必须直接编辑 XML 配置文件。
 
 ### 操作步骤：
 
@@ -251,24 +234,20 @@ FastFlag `DFIntTaskSchedulerTargetFps` 已不再起作用——它已被移出�
 > [!NOTE]
 > 修改此文件前必须完全关闭 Roblox。客户端在退出时会重写此文件，因此在游戏运行时做出的任何修改都会丢失。
 
----
-
 ## 安全与反作弊风险
 
 Roblox 使用 Hyperion (Byfron) 反作弊系统。在 `config.json` 中配置白名单内的 FFlags 是完全安全的，但试图绕过白名单则不然。
 
 > [!CAUTION]
-> 以下行为会带来被永久封号或封锁硬件的高风险。请千万不要尝试：
+> 以下行为会带来被永久封号或封锁硬件的高风险，请勿尝试：
 
-- **修改缓存文件（`IxpSettings.json`）：**向缓存文件中注入未经授权的 flag 并将其锁定为只读，会被 Hyperion 检测为恶意篡改文件。
-- **内存编辑：**使用工具强制加载未允许的 flag（例如通过 `DFIntTimestepArbiterThresholdCFLThou` 修改物理时间步长，或通过透视修改贴图）会触发自动封号。
-- **绕过白名单程序：**任何旨在绕过 FFlag 过滤器的程序或启动参数都会被归类为外挂/辅助工具。
-
----
+- **修改缓存文件（`IxpSettings.json`）：** 向缓存文件中注入未经授权的 flag 并将其锁定为只读，会被 Hyperion 检测为篡改文件。
+- **内存编辑：** 使用工具强制加载未允许的 flag（例如通过 `DFIntTimestepArbiterThresholdCFLThou` 修改物理时间步长，或通过透视修改贴图）会触发自动封号。
+- **绕过白名单程序：** 任何旨在绕过 FFlag 过滤器的程序或启动参数都会被归类为外挂/辅助工具。
 
 ## 已弃用的 FFlags
 
-以下 flag 常见于较旧的指南中，但它们已不再白名单内。将它们添加到 `config.json` 不会产生任何效果——它们会被客户端静默忽略。
+以下 flag 常见于较旧的指南中，但它们已不再在白名单内。将它们添加到 `config.json` 不会产生任何效果，因为客户端会将其忽略。
 
 | Flag | 弃用原因 |
 | :--- | :--- |
@@ -280,13 +259,11 @@ Roblox 使用 Hyperion (Byfron) 反作弊系统。在 `config.json` 中配置白
 | `FFlagMovePrerender` | 线程操作 Flag 已被拦截。 |
 | `DFIntDebugDynamicRenderKiloPixels` | 渲染分辨率缩放已被 Roblox 工程团队否决。 |
 
----
-
 ## 免责声明与来源
 
 > [!NOTE]
-> FFlag 白名单由 Roblox 官方维护，可能随客户端的后续更新而发生变化。本指南最后更新于 **2026 年 7 月**。在部署配置前，请务必参阅官方来源核实。
+> FFlag 白名单由 Roblox 官方维护，可能随客户端的后续更新而发生变化。本指南更新于 **2026 年 7 月**。在部署配置前，请务必参阅官方来源核实。
 
 **官方来源：**
-- [Allowlist for local client configuration via Fast Flags — Roblox DevForum](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
-- [Sober Configuration Tips & Tricks — Vinegar 官方文档](https://vinegarhq.org/Sober/Configuration/TipsAndTricks.html)
+- [Roblox DevForum 上的 Fast Flags 本地客户端配置白名单](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
+- [Vinegar 官方文档中的 Sober 配置技巧与提示](https://vinegarhq.org/Sober/Configuration/TipsAndTricks.html)

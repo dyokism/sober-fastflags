@@ -1,4 +1,4 @@
-<h1 align="center">Roblox FastFlags Guide for Sober</h1>
+<h1 align="center">Roblox FastFlags guide for Sober</h1>
 <p align="center">Verified, safe, and allowlisted FastFlags for the Sober client on Linux.</p>
 
 <p align="center">
@@ -11,27 +11,23 @@
   <a href="README.pt.md">Português</a>
 </p>
 
----
-
-## Table of Contents
+## Table of contents
 
 - [What is Sober?](#what-is-sober)
 - [What are FastFlags?](#what-are-fastflags)
-- [Confirmed Active FFlags](#confirmed-active-fflags)
-  - [Rendering & Performance](#rendering--performance)
-  - [Stability & VRAM](#stability--vram)
-  - [UI & Environment](#ui--environment)
-- [Configuration Presets](#configuration-presets)
-  - [Preset 1: Low-End / VRAM Crash Fix](#preset-1-low-end--vram-crash-fix)
-  - [Preset 2: Balanced / Mid-Range](#preset-2-balanced--mid-range)
-  - [Preset 3: Maximum Graphics Fidelity](#preset-3-maximum-graphics-fidelity)
-- [In-Depth Topics](#in-depth-topics)
-- [Framerate Uncapping](#framerate-uncapping)
-- [Security & Anti-Cheat Risks](#security--anti-cheat-risks)
+- [Confirmed active FFlags](#confirmed-active-fflags)
+  - [Rendering and performance](#rendering-and-performance)
+  - [Stability and VRAM](#stability-and-vram)
+  - [UI and environment](#ui-and-environment)
+- [Configuration presets](#configuration-presets)
+  - [Preset 1: Low-end / VRAM crash fix](#preset-1-low-end--vram-crash-fix)
+  - [Preset 2: Balanced / mid-range](#preset-2-balanced--mid-range)
+  - [Preset 3: Maximum graphics fidelity](#preset-3-maximum-graphics-fidelity)
+- [Detailed technical topics](#detailed-technical-topics)
+- [Uncapping framerates](#uncapping-framerates)
+- [Security and anti-cheat risks](#security-and-anti-cheat-risks)
 - [Deprecated FFlags](#deprecated-fflags)
-- [Disclaimer & Sources](#disclaimer--sources)
-
----
+- [Disclaimer and sources](#disclaimer-and-sources)
 
 ## What is Sober?
 
@@ -39,27 +35,25 @@
 
 ## What are FastFlags?
 
-FastFlags (FFlags) are internal Roblox engine variables that control rendering, UI, stability, and more. Since **September 29, 2025**, Roblox enforces a strict allowlist — only a small subset of flags can be overridden locally via configuration files. Any flag not on the allowlist is silently ignored by the client.
+FastFlags (FFlags) are internal Roblox engine variables that control rendering, UI, stability, and other settings. Since September 29, 2025, Roblox enforces a strict allowlist: only a small subset of flags can be overridden locally via configuration files. Any flag not on the allowlist is ignored by the client.
 
 > [!IMPORTANT]
-> This guide only covers flags that are **confirmed to be on the current allowlist**. Flags from older community guides may no longer work.
+> This guide only covers flags confirmed to be on the current allowlist. Flags from older community guides may no longer work.
 
----
+## Confirmed active FFlags
 
-## Confirmed Active FFlags
-
-### Rendering & Performance
+### Rendering and performance
 
 These flags control geometry detail, anti-aliasing, lighting, and grass rendering distance.
 
 | Flag Name | Type | Value Range | What It Does |
 | :--- | :--- | :--- | :--- |
 | `DFIntCSGLevelOfDetailSwitchingDistance` | int | `0` - `1000` | Master LOD culling distance for CSG models. Lower = better FPS. |
-| `DFIntCSGLevelOfDetailSwitchingDistanceL12` | int | `0` - `1000` | LOD distance for Graphics Quality 1–2. |
-| `DFIntCSGLevelOfDetailSwitchingDistanceL23` | int | `0` - `1000` | LOD distance for Graphics Quality 2–3. |
-| `DFIntCSGLevelOfDetailSwitchingDistanceL34` | int | `0` - `1000` | LOD distance for Graphics Quality 3–4. |
+| `DFIntCSGLevelOfDetailSwitchingDistanceL12` | int | `0` - `1000` | LOD distance for Graphics Quality 1 to 2. |
+| `DFIntCSGLevelOfDetailSwitchingDistanceL23` | int | `0` - `1000` | LOD distance for Graphics Quality 2 to 3. |
+| `DFIntCSGLevelOfDetailSwitchingDistanceL34` | int | `0` - `1000` | LOD distance for Graphics Quality 3 to 4. |
 | `FIntDebugForceMSAASamples` | int | `1`, `2`, `4` | Forces MSAA anti-aliasing (smoother edges, costs GPU). |
-| `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Overrides the graphics level slider (goes beyond default 1–10). |
+| `DFIntDebugFRMQualityLevelOverride` | int | `0` - `21` | Overrides the graphics level slider (goes beyond default 1 to 10). |
 | `FIntFRMMaxGrassDistance` | int | `0` - `1000` | Max render distance for terrain grass. Set to `0` to disable grass. |
 | `FIntFRMMinGrassDistance` | int | `0` - `1000` | Min distance where grass starts rendering. |
 | `DFFlagDebugPauseVoxelizer` | bool | `true` / `false` | Disables voxel lighting. |
@@ -67,7 +61,7 @@ These flags control geometry detail, anti-aliasing, lighting, and grass renderin
 | `FFlagDebugGraphicsPreferVulkan` | bool | `true` / `false` | Prefers Vulkan for rendering. |
 | `FFlagDebugGraphicsPreferOpenGL` | bool | `true` / `false` | Prefers OpenGL for rendering. |
 
-### Stability & VRAM
+### Stability and VRAM
 
 These flags help prevent out-of-memory crashes, especially on GPUs with limited VRAM.
 
@@ -77,9 +71,9 @@ These flags help prevent out-of-memory crashes, especially on GPUs with limited 
 | `DFIntTextureQualityOverride` | int | `0` - `3` | Sets texture quality (0 = lowest, 3 = max). |
 
 > [!WARNING]
-> Setting `DFIntTextureQualityOverride` to `3` on GPUs with 4GB VRAM or less will very likely cause an instant `RBXCRASH: OutOfMemory` crash. Use `2` or `1` for stability.
+> Setting `DFIntTextureQualityOverride` to `3` on GPUs with 4 GB VRAM or less often causes an instant `RBXCRASH: OutOfMemory` crash. Use `2` or `1` for stability.
 
-### UI & Environment
+### UI and environment
 
 Minor flags that affect visual comfort and interface behavior.
 
@@ -87,9 +81,7 @@ Minor flags that affect visual comfort and interface behavior.
 | :--- | :--- | :--- | :--- |
 | `FIntGrassMovementReducedMotionFactor` | bool | `true` / `false` | Reduces motion for grass animations. *(Note: Uses `FInt` name prefix but expects boolean `true`/`false`).* |
 
----
-
-## Configuration Presets
+## Configuration presets
 
 Copy one of the presets below and paste it into your Sober configuration file:
 
@@ -97,9 +89,9 @@ Copy one of the presets below and paste it into your Sober configuration file:
 ~/.var/app/org.vinegarhq.Sober/config/sober/config.json
 ```
 
-### Preset 1: Low-End / VRAM Crash Fix
+### Preset 1: Low-end / VRAM crash fix
 
-For GPUs with less than 4GB VRAM, integrated graphics, or systems experiencing `OutOfMemory` crashes.
+For GPUs with less than 4 GB VRAM, integrated graphics, or systems experiencing `OutOfMemory` crashes.
 
 ```json
 {
@@ -117,9 +109,9 @@ For GPUs with less than 4GB VRAM, integrated graphics, or systems experiencing `
 }
 ```
 
-### Preset 2: Balanced / Mid-Range
+### Preset 2: Balanced / mid-range
 
-For mid-tier GPUs (GTX 1650, RX 580 class) with 4–6GB VRAM. Good balance between visuals and performance.
+For mid-tier GPUs (GTX 1650, RX 580 class) with 4 to 6 GB VRAM. Good balance between visuals and performance.
 
 ```json
 {
@@ -138,9 +130,9 @@ For mid-tier GPUs (GTX 1650, RX 580 class) with 4–6GB VRAM. Good balance betwe
 }
 ```
 
-### Preset 3: Maximum Graphics Fidelity
+### Preset 3: Maximum graphics fidelity
 
-For high-end systems with 8GB+ VRAM. Forces maximum detail, anti-aliasing, and texture quality.
+For high-end systems with 8 GB+ VRAM. Forces maximum detail, anti-aliasing, and texture quality.
 
 ```json
 {
@@ -159,29 +151,27 @@ For high-end systems with 8GB+ VRAM. Forces maximum detail, anti-aliasing, and t
 > [!TIP]
 > You can mix and match flags between presets. For example, use the Balanced LOD distances with Maximum texture quality if your GPU has enough VRAM but struggles with geometry.
 
----
-
-## In-Depth Topics
+## Detailed technical topics
 
 <details>
-<summary><strong>Level of Detail (LOD) & Geometry Scaling</strong></summary>
+<summary><strong>Level of detail (LOD) and geometry scaling</strong></summary>
 
 Roblox maps often use complex Constructive Solid Geometry (CSG) unions. Rendering these at far distances puts heavy load on both CPU and GPU.
 
-By lowering `DFIntCSGLevelOfDetailSwitchingDistance` (e.g., to `150`), you force the game to swap complex models for low-polygon versions closer to the camera. This significantly boosts framerate without changing the physical collision hitboxes — objects still behave the same, they just look simpler from far away.
+By lowering `DFIntCSGLevelOfDetailSwitchingDistance` (e.g., to `150`), you force the game to swap complex models for low-polygon versions closer to the camera. This increases framerates without changing physical collision hitboxes: objects still behave the same, but look simpler from far away.
 
 The tiered variants (`L12`, `L23`, `L34`) let you fine-tune this per graphics quality level, so lower quality settings cull more aggressively.
 
 </details>
 
 <details>
-<summary><strong>VRAM Allocation & Out-of-Memory (OOM) Crashes</strong></summary>
+<summary><strong>VRAM allocation and out-of-memory (OOM) crashes</strong></summary>
 
-Sober runs the Roblox Android binary inside a Linux Flatpak environment. The Android binary assumes a shared mobile memory model, which does not match how desktop Linux GPU drivers handle VRAM.
+Sober runs the Roblox Android binary inside a Linux Flatpak environment. The Android binary assumes a shared mobile memory model, which differs from how desktop Linux GPU drivers handle VRAM.
 
-**The problem:** When the engine requests maximum quality textures, it can quickly exhaust the GPU's dedicated VRAM. On desktop Windows, the driver would spill excess data into system RAM. On Linux (especially with proprietary NVIDIA drivers), this fallback does not work reliably — causing an instant `RBXCRASH: OutOfMemory` crash.
+When the engine requests maximum quality textures, it can quickly exhaust dedicated GPU VRAM. On Windows desktop, drivers spill excess data into system RAM. On Linux (especially with proprietary NVIDIA drivers), this fallback does not work reliably, causing an instant `RBXCRASH: OutOfMemory` crash.
 
-**The fix:** Set `DFFlagTextureQualityOverrideEnabled` to `true` and `DFIntTextureQualityOverride` to `2` (medium) or `1` (low). This forces the engine to request smaller textures from the server, keeping VRAM usage within safe limits.
+To fix this, set `DFFlagTextureQualityOverrideEnabled` to `true` and `DFIntTextureQualityOverride` to `2` (medium) or `1` (low). This forces the engine to request smaller textures from the server, keeping VRAM usage within safe limits.
 
 </details>
 
@@ -190,13 +180,13 @@ Sober runs the Roblox Android binary inside a Linux Flatpak environment. The And
 
 Graphics API selection can be configured via `config.json` or FFlags (`FFlagDebugGraphicsPreferVulkan` / `FFlagDebugGraphicsPreferOpenGL`).
 
-- By default, Sober uses **Vulkan** for optimal performance.
-- If you experience graphic artifacts, black screens, or startup crashes (common on older GPUs or hybrid laptop setups), official Vinegar documentation recommends running `flatpak run org.vinegarhq.Sober config` in your terminal and selecting **Force Legacy Rendering** (or setting `"use_opengl": true` in `config.json`).
+- By default, Sober uses Vulkan for optimal performance.
+- If you experience graphic artifacts, black screens, or startup crashes (common on older GPUs or hybrid laptop setups), Vinegar documentation recommends running `flatpak run org.vinegarhq.Sober config` in your terminal and selecting **Force Legacy Rendering** (or setting `"use_opengl": true` in `config.json`).
 
 </details>
 
 <details>
-<summary><strong>Asset Overlay (Custom Textures & Cursors)</strong></summary>
+<summary><strong>Asset overlay (custom textures and cursors)</strong></summary>
 
 Sober allows replacing game assets via the `asset_overlay` directory located at:
 `~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay`
@@ -214,12 +204,12 @@ Example for custom mouse cursors:
                 ├── ArrowFarCursor.png
                 └── IBeamCursor.png
 ```
-To revert changes, simply clear out the files from `asset_overlay`.
+To revert changes, clear the files from `asset_overlay`.
 
 </details>
 
 <details>
-<summary><strong>Fullscreen (F11) & Exit Controls</strong></summary>
+<summary><strong>Fullscreen (F11) and exit controls</strong></summary>
 
 The in-game fullscreen toggle in Roblox does not function on mobile Android builds. On Sober, press `F11` to enter or exit fullscreen mode. Sober remembers the fullscreen state across launches.
 
@@ -227,11 +217,9 @@ To close the app automatically upon leaving an experience, add `"close_on_leave"
 
 </details>
 
----
+## Uncapping framerates
 
-## Framerate Uncapping
-
-The `DFIntTaskSchedulerTargetFps` FastFlag no longer works — it was removed from the allowlist. To change your framerate cap, you must edit the XML settings file directly.
+The `DFIntTaskSchedulerTargetFps` FastFlag no longer works because Roblox removed it from the allowlist. To change your framerate cap, edit the XML settings file directly.
 
 ### Steps:
 
@@ -244,26 +232,22 @@ The `DFIntTaskSchedulerTargetFps` FastFlag no longer works — it was removed fr
 7. Save, close, and relaunch Roblox.
 
 > [!NOTE]
-> You must close Roblox before editing this file. The client overwrites this file on exit, so any changes made while the game is running will be lost.
+> Close Roblox before editing this file. The client overwrites this file on exit, so any changes made while the game is running will be lost.
 
----
+## Security and anti-cheat risks
 
-## Security & Anti-Cheat Risks
-
-Roblox uses the Hyperion (Byfron) anti-cheat system. Configuring allowlisted FFlags in `config.json` is completely safe. Attempting to bypass the allowlist is not.
+Roblox uses the Hyperion (Byfron) anti-cheat system. Configuring allowlisted FFlags in `config.json` is safe. Attempting to bypass the allowlist is not.
 
 > [!CAUTION]
-> The following actions carry a high risk of **permanent account or hardware bans**. Do not attempt them.
+> The following actions carry a high risk of permanent account or hardware bans. Do not attempt them.
 
-- **Cache file manipulation (`IxpSettings.json`):** Injecting unauthorized flags into cache files and locking them to read-only is detected as tampering by Hyperion.
-- **Memory editing:** Using tools to force-load disallowed flags (e.g., physics timestep manipulation via `DFIntTimestepArbiterThresholdCFLThou`, or texture bypasses for wallhacks) triggers automated bans.
-- **Allowlist bypass programs:** Any program or launch argument designed to circumvent the FFlag filter is classified as an exploit.
-
----
+- **Cache file manipulation (`IxpSettings.json`):** Injecting unauthorized flags into cache files and setting them to read-only is detected as tampering by Hyperion.
+- **Memory editing:** Using tools to force-load disallowed flags (such as physics timestep manipulation via `DFIntTimestepArbiterThresholdCFLThou` or texture bypasses for wallhacks) triggers automated bans.
+- **Allowlist bypass programs:** Programs or launch arguments designed to circumvent the FFlag filter are classified as exploits.
 
 ## Deprecated FFlags
 
-The following flags are commonly found in older guides but are **no longer on the allowlist**. Adding them to `config.json` has zero effect — they are silently ignored.
+These flags were popular in older guides, but Roblox removed them from the allowlist. Adding them to `config.json` has no effect because the client ignores them.
 
 | Flag | Why It's Deprecated |
 | :--- | :--- |
@@ -275,13 +259,11 @@ The following flags are commonly found in older guides but are **no longer on th
 | `FFlagMovePrerender` | Thread manipulation flags are blocked. |
 | `DFIntDebugDynamicRenderKiloPixels` | Render resolution scaling was vetoed by Roblox engineering. |
 
----
-
-## Disclaimer & Sources
+## Disclaimer and sources
 
 > [!NOTE]
-> The FFlag allowlist is maintained by Roblox Corporation and may change at any time with future client updates. This guide is accurate as of **July 2026**. Always verify against the official source before deploying configurations.
+> Roblox Corporation maintains the FFlag allowlist, which may change with future client updates. This guide is accurate as of **July 2026**. Always verify against official sources before deploying configurations.
 
-**Official Sources:**
-- [Allowlist for local client configuration via Fast Flags — Roblox DevForum](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
-- [Sober Configuration Tips & Tricks — Vinegar Documentation](https://vinegarhq.org/Sober/Configuration/TipsAndTricks.html)
+**Official sources:**
+- [Allowlist for local client configuration via Fast Flags on the Roblox DevForum](https://devforum.roblox.com/t/allowlist-for-local-client-configuration-via-fast-flags/3966569)
+- [Sober Configuration Tips & Tricks from Vinegar Documentation](https://vinegarhq.org/Sober/Configuration/TipsAndTricks.html)
